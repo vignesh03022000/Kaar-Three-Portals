@@ -1,0 +1,26 @@
+{
+  "uri": "https://api.irpa-trial.cfapps.eu10.hana.ondemand.com",
+  "uaa": {
+    "tenantmode": "shared",
+    "sburl": "https://internal-xsuaa.authentication.eu10.hana.ondemand.com",
+    "subaccountid": "a8939406-f392-4a8a-9150-03bd37248fcc",
+    "clientid": "sb-ee390aaf-8159-4210-b88a-3ffddc3b8cf3!b89697|sapmlirpa--irpatrial--trial--uaa-service-broker!b30610",
+    "xsappname": "ee390aaf-8159-4210-b88a-3ffddc3b8cf3!b89697|sapmlirpa--irpatrial--trial--uaa-service-broker!b30610",
+    "clientsecret": "0jM3yddGhmEitpBTzqyEbIY6dAQ=",
+    "url": "https://909197c8trial.authentication.eu10.hana.ondemand.com",
+    "uaadomain": "authentication.eu10.hana.ondemand.com",
+    "verificationkey": "-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAveu7ruuuOEgVqzAkTwrFnf2DxF07zyzMC5S6hR2mOezhaCtCBR3k21+uLL8Zbbrr8pUjbQqQuUjBJRnlyG4WJMxpunPfiek8htvUS9+oCXLRPnvxEAkHVxkQB+TGjbrHCxsg8VV180KKbfXdUeuMAKl8ds1wtfjebhaJ7/SPpuxX++Oo9B/YiSngvfdRk7bekSQzq+ia6FZbJfI2swJ5Jtf1c0lqGG4UImVINPP2r2kGF7bO9Ux8b1+cHcqzwu53mVqTLrD7w7/1r8pwfzG9wAmHLRc0jBmKNfz27uFJwDMHfjMxAA39djtKFceyf1VT4YQ9gWj5HsE3tXQxh8mVHQIDAQAB-----END PUBLIC KEY-----",
+    "apiurl": "https://api.authentication.eu10.hana.ondemand.com",
+    "identityzone": "909197c8trial",
+    "identityzoneid": "a8939406-f392-4a8a-9150-03bd37248fcc",
+    "tenantid": "a8939406-f392-4a8a-9150-03bd37248fcc",
+    "zoneid": "a8939406-f392-4a8a-9150-03bd37248fcc"
+  }
+}
+
+
+---------------------------------------------------------------------------
+trail-service key
+standard  ->application
+https://909197c8trial.app.irpa-trial.cfapps.eu10.hana.ondemand.com/
+DESKTOP-8QM5FGJ - host name

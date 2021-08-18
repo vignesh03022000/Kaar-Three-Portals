@@ -1,0 +1,4 @@
+
+what is the use of the get method in http request?? 
+
+GET is used to retrieve and request data from a specified resource in a server. GET is one of the most popular HTTP request techniques. In simple words, the GET method is used to retrieve whatever information is identified by the Request-URL.

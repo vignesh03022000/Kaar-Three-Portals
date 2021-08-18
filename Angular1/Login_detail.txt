@@ -1,0 +1,49 @@
+Login Details
+-se80->Creat the package name ::-->zvicky_customer_portal
+->create the custom table name ::-->zcust_login_VK -->(Allow Restriction)
+-->Creat the three field
+	usernaem->kunnr(kna1)
+	password->xucode
+->Create the enteries and display (ctr+sit+f10)
+->create the structure name::->zcust_login_vk_str(enter te same thingf username and password)
+---------------------------------------------------------------------------------------------
+RFc::
+Functional group Name::-->zfg_portal_vicky-->se80
+Functionaal modul Name;;-->zbapi_cust_login_vk-->se37
+Name:
+------------------------------------------------------------------------------------------------
+ESR
+-->vicky of vignes.com(Softwar directory)-->software component
+Import RFC
+Creat the Service
+Create the message mapping
+Creathe operantionla mapping
+--------------------------------------------------------------------------
+Intergration directory
+KDS-(Reciver)-cc_vk_Custlogin_Receiver
+soap-(sender)-cc_vk_cuslogin_sender ,Create the componet first after than create component channel
+Integration cnfig:-
+Communication Component:Bussiness Component
+Interface:service Iterface
+NameSpace:
+
+----------------------------------------------------------------------------
+Customer Detail:
+RFC:Function name ::->ZBAPI_CUST_EDIT_VK
+
+-------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+KDSK906346
+KDSK906350
+KDSK906352-tr:vignesh.A
+

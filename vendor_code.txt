@@ -1,0 +1,77 @@
+
+Login -vendor 
+urn:sap-com:document:sap:rfc:functions
+CC_VENDOR_LOGIN_SENDER_VK
+BC_VENDOR_LOGIN_SENDER_VK
+
+code
+var request = require('request');
+var options = {
+  'method': 'POST',
+  'url': 'http://dxktpipo.kaarcloud.com:50000/RESTAdapter/login_vk',
+  'headers': {
+    'Authorization': 'Basic UE9VU0VSOlRlY2hAMjAyMQ==',
+    'Content-Type': 'application/json',
+    'Cookie': 'JSESSIONID=wgCAbOuPyAQjyGimKsvNI2zu5z4VegF-Y2kA_SAPuPh59EPPgX4w6x_Dr1gMto40; JSESSIONMARKID=mCxY_A0EwcM1hJME0obvAqe0W8CYPFDATVo35jaQA; saplb_*=(J2EE6906720)6906750'
+  },
+  body: JSON.stringify({
+    "VENDOR_ID": 3
+  })
+
+};
+request(options, function (error, response) {
+  if (error) throw new Error(error);
+  console.log(response.body);
+});
+----------------------------------------------------------------------------------------
+vendor login
+/vendor/detail_vK
+SI_VENDOR_DETAIL_VK
+CC_VENDOR_REVICER_VK1
+BC_VENDOR_DETAIL_REVICER_VK1
+CC_VENDOR_DETAIL_REVICER_VK1
+
+
+
+var request = require('request');
+var options = {
+  'method': 'POST',
+  'url': 'http://dxktpipo.kaarcloud.com:50000/RESTAdapter/vendor/detail_vK',
+  'headers': {
+    'Authorization': 'Basic UE9VU0VSOlRlY2hAMjAyMQ==',
+    'Content-Type': 'application/json',
+    'Cookie': 'JSESSIONID=8hIVlQE-14bWg1TNp5tFlCs_0yMYegF-Y2kA_SAPZp6GyKo624Nw96ZVWZmkY8iO; JSESSIONMARKID=HVMQYAXFYloVGbN8NYI-I2HLBVVqbbuov-z35jaQA; saplb_*=(J2EE6906720)6906750'
+  },
+  body: JSON.stringify({
+    "VENDOR_ID": 1
+  })
+
+};
+request(options, function (error, response) {
+  if (error) throw new Error(error);
+  console.log(response.body);
+});
+
+--------------------------------------------------------------------------------------------------------------------
+
+
+
+var request = require('request');
+var options = {
+  'method': 'POST',
+  'url': 'http://dxktpipo.kaarcloud.com:50000/RESTAdapter/vendor/credit_vk',
+  'headers': {
+    'Authorization': 'Basic UE9VU0VSOlRlY2hAMjAyMQ==',
+    'Content-Type': 'application/json',
+    'Cookie': 'JSESSIONID=Wq2ejR9ZUq5vgf79oJy-7YFBYWd3egF-Y2kA_SAPJ1drjJ325TcO18NVRsqRCUzh; JSESSIONMARKID=s2QQbwlD9elCbUdwbhWrup2cS28R6TVRmbfX5jaQA; saplb_*=(J2EE6906720)6906750'
+  },
+  body: JSON.stringify({
+    "VENDOR_ID": "10067"
+  })
+
+};
+request(options, function (error, response) {
+  if (error) throw new Error(error);
+  console.log(response.body);
+});
+

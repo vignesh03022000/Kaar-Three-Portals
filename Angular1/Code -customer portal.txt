@@ -1,0 +1,565 @@
+FUNCTION zbapi_cust_credit_vk.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     VALUE(CUST_ID) TYPE  KNA1-KUNNR
+*"  EXPORTING
+*"     VALUE(BAPIRETURN) TYPE  BAPIRETURN
+*"  TABLES
+*"      IT_CUSTCRED STRUCTURE  BAPI3007_2 OPTIONAL
+*"----------------------------------------------------------------------
+  TABLES: bsid----->	BSID SAP Accounting: Secondary Index for Customers Table and data. BSID is a standard SAP Table which is used to store Accounting: Secondary Index for Customers data and is available within R/3 SAP systems depending on the version and release level.
+
+  TYPES: BEGIN OF ty_bs,
+           kunnr TYPE bsid-kunnr, --username
+           bukrs TYPE bsid-bukrs,-- company code
+           budat TYPE bsid-budat, --key date
+         END OF ty_bs.
+
+  DATA: wa_bs TYPE ty_bs, 
+        it_bs TYPE TABLE OF ty_bs.
+
+  DATA: wa_bap TYPE bapi3007_2,
+        it_bap TYPE TABLE OF bapi3007_2.
+
+  CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+    EXPORTING
+      input  = cust_id
+    IMPORTING
+      output = cust_id.
+
+  SELECT kunnr, bukrs, budat FROM bsid INTO TABLE @it_bs WHERE kunnr = @cust_id.
+
+  " JUST FOR THE SAKE OF EXECUTING THE BAPI
+
+  READ TABLE it_bs INTO wa_bs INDEX 1. 
+  CALL FUNCTION 'BAPI_AR_ACC_GETOPENITEMS'
+    EXPORTING
+      companycode = wa_bs-bukrs
+      customer    = wa_bs-kunnr
+      keydate     = wa_bs-budat
+    IMPORTING
+      return      = bapireturn
+    TABLES
+      lineitems   = it_bap.
+
+  LOOP AT it_bap INTO wa_bap.
+    IF wa_bap-doc_type EQ 'DG'.---credit memo
+      APPEND wa_bap TO it_custcred.
+      CLEAR  wa_bap.
+    ENDIF.
+  ENDLOOP.
+
+ENDFUNCTION.
+------------------------------------------------------------------
+------------------------------------------------------------------
+
+ FUNCTION zbapi_cust_debit_vk.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     VALUE(CUST_ID) TYPE  KNA1-KUNNR
+*"  EXPORTING
+*"     VALUE(BAPIRETURN) TYPE  BAPIRETURN
+*"  TABLES
+*"      IT_CUSTDEB STRUCTURE  BAPI3007_2 OPTIONAL
+*"----------------------------------------------------------------------
+
+
+
+   TYPES: BEGIN OF ty_bs,
+            kunnr TYPE bsid-kunnr,
+            bukrs TYPE bsid-bukrs,
+            budat TYPE bsid-budat,
+          END OF ty_bs.
+
+   DATA: wa_bs TYPE ty_bs,
+         it_bs TYPE TABLE OF ty_bs.
+
+   DATA: wa_bap TYPE bapi3007_2,
+         it_bap TYPE TABLE OF bapi3007_2.
+
+   CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+     EXPORTING
+       input  = cust_id
+     IMPORTING
+       output = cust_id.
+
+   SELECT kunnr, bukrs, budat FROM bsid INTO TABLE @it_bs WHERE kunnr = @cust_id.
+
+   " JUST FOR THE SAKE OF EXECUTING THE BAPI
+   READ TABLE it_bs INTO wa_bs INDEX 1.
+   CALL FUNCTION 'BAPI_AR_ACC_GETOPENITEMS'
+     EXPORTING
+       companycode = wa_bs-bukrs
+       customer    = wa_bs-kunnr
+       keydate     = wa_bs-budat
+     IMPORTING
+       return      = bapireturn
+     TABLES
+       lineitems   = it_bap.
+
+   LOOP AT it_bap INTO wa_bap.
+     IF wa_bap-doc_type EQ 'DR'.
+       APPEND wa_bap TO it_custdeb.
+       CLEAR  wa_bap.
+     ENDIF.
+   ENDLOOP.
+
+
+
+
+ ENDFUNCTION.
+-----------------------------------------------------------
+
+------------------------------------------------------------
+FUNCTION ZBAPI_CUST_DELIVERY_VK.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     VALUE(CUST_ID) TYPE  KNA1-KUNNR
+*"  TABLES
+*"      IT_DELHEAD STRUCTURE  BAPIDLVHDR OPTIONAL
+*"      IT_DELITEM STRUCTURE  BAPIDLVITEM OPTIONAL
+*"      RETURN STRUCTURE  BAPIRET2 OPTIONAL
+*"----------------------------------------------------------------------
+TYPES: BEGIN OF TY_VB,
+        VBELN TYPE VBELN,
+       END OF TY_VB.
+
+DATA: IT_VB TYPE TABLE OF TY_VB,
+      WA_VB TYPE TY_VB.
+
+DATA: data_control TYPE bapidlvbuffercontrol.
+data_control-item = 'X'.
+
+
+
+DATA: IT_ITEM TYPE TABLE OF bapidlvitem,
+      WA_ITEM TYPE bapidlvitem.
+
+
+
+
+DATA: IT_HEAD TYPE TABLE OF bapidlvhdr,
+      WA_HEAD TYPE bapidlvhdr.
+
+
+
+
+
+CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+  EXPORTING
+    input         = CUST_ID
+ IMPORTING
+   OUTPUT        = CUST_ID.
+
+
+
+CALL FUNCTION 'BAPI_DELIVERY_GETLIST'
+  EXPORTING
+    is_dlv_data_control           = data_control
+ TABLES
+   ET_DELIVERY_HEADER            = IT_HEAD
+   ET_DELIVERY_ITEM              = IT_ITEM
+   RETURN                        = RETURN.
+
+
+
+
+
+SELECT VBELN FROM LIKP INTO TABLE IT_VB WHERE KUNNR = CUST_ID.
+
+LOOP AT IT_HEAD INTO WA_HEAD.
+  READ TABLE IT_VB INTO WA_VB WITH KEY VBELN = WA_HEAD-VBELN.
+  IF SY-SUBRC = 0.
+    APPEND WA_HEAD to IT_DELHEAD.
+  ENDIF.
+ENDLOOP.
+
+LOOP AT IT_ITEM INTO WA_ITEM.
+  READ TABLE IT_VB INTO WA_VB WITH KEY VBELN = WA_ITEM-VBELN.
+  IF SY-SUBRC = 0.
+    APPEND WA_ITEM to IT_DELITEM.
+  ENDIF.
+ENDLOOP.
+
+
+
+
+ENDFUNCTION.
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+FUNCTION ZBAPI_CUST_DETAIL_VK.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     VALUE(USERNAME) TYPE  ZCUST_DETAILS_VK_STR-USERNAME
+*"  EXPORTING
+*"     VALUE(BAPIRETURN) TYPE  BAPIRETURN
+*"     VALUE(CUSTOMER_DETAILS) TYPE  ZCUST_DETAILS_VK_STR
+*"----------------------------------------------------------------------
+  CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+  EXPORTING
+    input        = username
+ IMPORTING
+   OUTPUT        = username.
+
+
+
+data:it_table type table of ZCUST_DETAILS_VK_STR.
+
+
+
+select KUNNR
+  LAND1
+  NAME1
+  NAME2
+  ORT01
+  PSTLZ
+  REGIO
+  SORTL
+  STRAS
+  TELF1
+  TELFX
+  XCPDK
+  ADRNR FROM KNA1 INTO TABLE it_table where kunnr = username.
+
+
+
+loop at it_table into customer_details.
+  endloop.
+
+  if sy-subrc eq 0.
+    bapireturn-type = 'S'.
+  else.
+     bapireturn-type ='F'.
+  endif.
+
+
+ENDFUNCTION.
+-------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+FUNCTION ZBAPI_CUST_EDIT_VK.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     VALUE(USERNAME) TYPE  ZCUST_DETAILS_VK_STR-USERNAME
+*"     VALUE(COUNTRY) TYPE  ZCUST_DETAILS_VK_STR-COUNTRY OPTIONAL
+*"     VALUE(NAME) TYPE  ZCUST_DETAILS_VK_STR-NAME OPTIONAL
+*"     VALUE(NAME_2) TYPE  ZCUST_DETAILS_VK_STR-NAME_2 OPTIONAL
+*"     VALUE(CITY) TYPE  ZCUST_DETAILS_VK_STR-CITY OPTIONAL
+*"     VALUE(POSTAL_CODE) TYPE  ZCUST_DETAILS_VK_STR-POSTAL_CODE
+*"       OPTIONAL
+*"     VALUE(STATE) TYPE  ZCUST_DETAILS_VK_STR-STATE OPTIONAL
+*"     VALUE(SEARCH_TERM) TYPE  ZCUST_DETAILS_VK_STR-SEARCH_TERM
+*"       OPTIONAL
+*"     VALUE(STREET) TYPE  ZCUST_DETAILS_VK_STR-STREET OPTIONAL
+*"     VALUE(TELEPHONE) TYPE  ZCUST_DETAILS_VK_STR-TELEPHONE OPTIONAL
+*"     VALUE(FAX_NUMBER) TYPE  ZCUST_DETAILS_VK_STR-FAX_NUMBER OPTIONAL
+*"     VALUE(ONE_TIME_ACC) TYPE  ZCUST_DETAILS_VK_STR-ONE_TIME_ACC
+*"       OPTIONAL
+*"     VALUE(ADDRESS) TYPE  ZCUST_DETAILS_VK_STR-ADDRESS OPTIONAL
+*"  EXPORTING
+*"     VALUE(RETURN) TYPE  BAPIRETURN
+*"----------------------------------------------------------------------
+
+   CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+  EXPORTING
+    input        = username
+ IMPORTING
+   OUTPUT        = username.
+
+
+data: IT_KNA1 TYPE TABLE OF KNA1,
+         WA_KNA1 TYPE KNA1.
+
+  SELECT * FROM KNA1 INTO TABLE IT_KNA1 WHERE KUNNR = username.
+
+  IF SY-SUBRC NE 0.
+    RETURN-TYPE = 'Invalid_no'.
+  ELSE.
+
+    LOOP AT IT_KNA1 INTO WA_KNA1.
+
+        IF NAME IS NOT INITIAL.
+        WA_KNA1-NAME1 = NAME.
+      ENDIF.
+
+      IF NAME_2 IS NOT INITIAL.
+        WA_KNA1-NAME2 = NAME_2.
+      ENDIF.
+
+
+      IF COUNTRY IS NOT INITIAL.
+        WA_KNA1-LAND1 = COUNTRY.
+      ENDIF.
+
+      IF CITY IS NOT INITIAL.
+        WA_KNA1-ORT01 = CITY.
+      ENDIF.
+
+       IF TELEPHONE IS NOT INITIAL.
+        WA_KNA1-TELF1 = TELEPHONE.
+      ENDIF.
+
+      IF FAX_NUMBER IS NOT INITIAL.
+        WA_KNA1-TELFX = FAX_NUMBER.
+      ENDIF.
+
+
+      IF POSTAL_CODE IS NOT INITIAL.
+        WA_KNA1-PSTLZ = POSTAL_CODE.
+      ENDIF.
+
+      IF STATE IS NOT INITIAL.
+        WA_KNA1-REGIO = STATE.
+      ENDIF.
+
+      IF SEARCH_TERM IS NOT INITIAL.
+        WA_KNA1-SORTL = SEARCH_TERM.
+      ENDIF.
+
+      IF STREET IS NOT INITIAL.
+        WA_KNA1-STRAS = STREET.
+      ENDIF.
+
+      IF ONE_TIME_ACC IS NOT INITIAL.
+        WA_KNA1-XCPDK = ONE_TIME_ACC.
+      ENDIF.
+
+      IF ADDRESS IS NOT INITIAL.
+        WA_KNA1-ADRNR = ADDRESS.
+      ENDIF.
+    ENDLOOP.
+
+ MODIFY KNA1 FROM WA_KNA1.
+
+    IF SY-SUBRC EQ 0.
+      RETURN-TYPE ='S'.
+    ELSE.
+      RETURN-TYPE ='F'.
+    ENDIF.
+  ENDIF.
+
+
+
+ENDFUNCTION.
+----------------------------------------------------------
+-----------------------------------------------------------
+FUNCTION ZBAPI_CUST_INQUIRY_DETAILS_VK.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     VALUE(CUST_ID) TYPE  KNA1-KUNNR
+*"  TABLES
+*"      INQ_HEAD STRUCTURE  BAPISDHD OPTIONAL
+*"      INQ_ITEM STRUCTURE  BAPISDITBOS OPTIONAL
+*"      RETURN STRUCTURE  BAPIRET2 OPTIONAL
+*"----------------------------------------------------------------------
+  TABLES: VBAK.
+
+CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+  EXPORTING
+    input         = CUST_ID
+  IMPORTING
+    OUTPUT        = CUST_ID.
+
+
+TYPES: BEGIN OF TY_VBK,
+       vbeln TYPE vbak-vbeln,
+       vbtyp TYPE vbak-vbtyp,
+       kunnr TYPE vbak-kunnr,
+       END OF TY_VBK.
+
+DATA: wa_vbak TYPE  TY_VBK,
+      it_vbak TYPE TABLE OF TY_VBK.
+
+DATA: WA_HEAD TYPE bapisdhd,
+      IT_HEAD TYPE TABLE OF bapisdhd.
+
+DATA: WA_ITEM TYPE bapisditbos,
+      IT_ITEM TYPE TABLE OF bapisditbos.
+
+SELECT vbeln vbtyp kunnr FROM vbak INTO table it_vbak up to 50 rows where kunnr = cust_id and vbtyp = 'A'.
+
+LOOP AT IT_VBAK INTO WA_VBAK.
+CALL FUNCTION 'BAPI_INQUIRY_GETDETAILBOS'
+  EXPORTING
+    salesdocument              = WA_VBAK-VBELN
+ IMPORTING
+   INQUIRYHEADER              = WA_HEAD
+ TABLES
+   RETURN                     = RETURN
+   INQUIRYITEMS               = IT_ITEM.
+
+APPEND WA_HEAD TO INQ_HEAD.
+
+LOOP AT IT_ITEM INTO WA_ITEM.
+  APPEND WA_ITEM TO INQ_ITEM.
+ENDLOOP.
+
+ENDLOOP.
+
+
+
+
+
+
+ENDFUNCTION.
+------------------------------------------------------
+-----------------------------------------------------
+FUNCTION ZBAPI_CUST_INQUIRY_VK.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     VALUE(CUST_ID) TYPE  KNA1-KUNNR
+*"  EXPORTING
+*"     VALUE(BAPIRETURN) TYPE  BAPIRETURN
+*"  TABLES
+*"      IT_VBAK STRUCTURE  ZCUST_INQUIRY_VK_STR
+*"----------------------------------------------------------------------
+  CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+  EXPORTING
+    input         = CUST_ID
+  IMPORTING
+    OUTPUT        = CUST_ID.
+
+select vbeln kunnr vbtyp from vbak into table it_vbak where kunnr = cust_Id  and vbtyp = 'A'.
+
+
+
+
+  if sy-subrc eq '0'.
+    bapireturn-type ='S'.
+    bapireturn-MESSAGE = 'Data found'.
+
+
+  else.
+    bapireturn-type = 'F'.
+    bapireturn-MESSAGE = 'No data found'.
+   endif.
+
+
+
+
+ENDFUNCTION.
+----------------------------------------------
+----------------------------------------------
+FUNCTION ZBAPI_CUST_LOGIN_VK .
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     VALUE(USERNAME) TYPE  ZCUST_LOGIN_VK_STR-USERNAME
+*"     VALUE(PASSWORD) TYPE  ZCUST_LOGIN_VK_STR-PASSWORD
+*"  EXPORTING
+*"     VALUE(BAPIRETURN) TYPE  BAPIRETURN
+*"----------------------------------------------------------------------
+DATA : WA_LOGIN TYPE zcust_login_vk_str.
+
+CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+  EXPORTING
+    INPUT        = username
+ IMPORTING
+   OUTPUT        = username.
+
+
+select SINGLE username password from  zcust_login_vk  into WA_LOGIN where username = username and   password = password.
+
+
+
+
+   IF SY-SUBRC EQ 0.
+    BAPIRETURN-TYPE = 'S'.
+  ELSE.
+    BAPIRETURN-TYPE = 'F'.
+  ENDIF.
+
+
+
+ENDFUNCTION.
+---------------------------------------------------------
+-----------------------------------------------------------
+FUNCTION ZBAPI_CUST_PAYAG_VK.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     VALUE(CUST_ID) TYPE  KNA1-KUNNR
+*"  EXPORTING
+*"     VALUE(RETURN) TYPE  BAPIRETURN
+*"  TABLES
+*"      IT_PAYAG STRUCTURE  BAPI3007_2 OPTIONAL
+*"----------------------------------------------------------------------
+
+TYPES: BEGIN OF ty_bs,
+        KUNNR TYPE bsid-kunnr,
+        bukrs TYPE bsid-bukrs,
+        budat TYPE bsid-budat,
+       END OF ty_bs.
+
+DATA: WA_BS TYPE ty_bs,
+      IT_BS TYPE TABLE OF ty_bs.
+
+DATA: WA_BAP TYPE bapi3007_2,
+      IT_BAP TYPE TABLE OF bapi3007_2.
+
+CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+  EXPORTING
+    input        = CUST_ID
+ IMPORTING
+    OUTPUT        = CUST_ID.
+
+SELECT kunnr, bukrs, budat FROM bsid INTO TABLE @IT_BS WHERE kunnr = @CUST_ID.
+
+LOOP AT IT_BS INTO WA_BS.
+  CALL FUNCTION 'BAPI_AR_ACC_GETOPENITEMS'
+    EXPORTING
+      companycode       = WA_BS-bukrs
+      customer          = WA_BS-kunnr
+      keydate           = WA_BS-budat
+   IMPORTING
+     RETURN            = RETURN
+    TABLES
+      lineitems         = IT_BAP.
+  LOOP AT IT_BAP INTO WA_BAP.
+    APPEND WA_BAP TO IT_PAYAG.
+    CLEAR WA_BAP.
+  ENDLOOP.
+ENDLOOP.
+
+
+
+
+ENDFUNCTION.
+----------------------------------------------------------------------------
+---------------------------------------------------------------------------
+FUNCTION ZBAPI_CUST_SALES_VK.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     VALUE(CUST_ID) TYPE  KNA1-KUNNR
+*"  EXPORTING
+*"     VALUE(BAPIRETURN) TYPE  BAPIRETURN
+*"  TABLES
+*"      IT_SALESORDER STRUCTURE  BAPIORDERS OPTIONAL
+*"----------------------------------------------------------------------
+
+
+CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+  EXPORTING
+    input        = CUST_ID
+ IMPORTING
+   OUTPUT        = CUST_ID.
+
+CALL FUNCTION 'BAPI_SALESORDER_GETLIST'
+  EXPORTING
+    customer_number             = CUST_ID
+    sales_organization          = 'SA01'
+ IMPORTING
+   RETURN                      =  BAPIRETURN
+  TABLES
+    sales_orders                = IT_SALESORDER.
+
+
+
+ENDFUNCTION.

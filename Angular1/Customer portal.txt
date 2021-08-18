@@ -1,0 +1,604 @@
+-wsld ---
+login:-http://dxktpipo.kaarcloud.com:50000/dir/wsdl?p=ic/f249e2b0f8873e3998723b8dd0783e57
+customer:-http://dxktpipo.kaarcloud.com:50000/dir/wsdl?p=ic/c957a02c41233cd0acf82f44237c332a   
+
+----------------------------------------------
+Forclient:-
+password:KC#Int!26%
+username:kaarintern06
+---------------------------------------------
+ ESR :-
+http://dxktpipo.kaarcloud.com:50000/rep/start/sso/Repository.jsp
+
+
+http://dxktpipo.kaarcloud.com:50000/RESTAdapter/yourEndpoint
+urn:sap-com:document:sap:rfc:functions
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------
+var request = require('request');
+var options = {
+  'method': 'POST',
+  'url': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_VK_CUSTLOGIN_SENDER&receiverParty=&receiverService=&interface=SI_CUST_LOGIN_VK&interfaceNamespace=http://vickycustomportl.com',
+  'headers': {
+    'SOAPAction': '"http://sap.com/xi/WebService/soap1.1"',
+    'Content-Type': 'text/xml',
+    'Authorization': 'Basic UE9VU0VSOlRlY2hAMjAyMQ==',
+    'Cookie': 'MYSAPSSO2=AjExMDAgAA1wb3J0YWw6UE9VU0VSiAAHZGVmYXVsdAEABlBPVVNFUgIAAzAwMAMAA0tQTwQADDIwMjEwNTE3MDUyMwUABAAAAAgKAAZQT1VTRVL%2FAQUwggEBBgkqhkiG9w0BBwKggfMwgfACAQExCzAJBgUrDgMCGgUAMAsGCSqGSIb3DQEHATGB0DCBzQIBATAiMB0xDDAKBgNVBAMTA0tQTzENMAsGA1UECxMESjJFRQIBADAJBgUrDgMCGgUAoF0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMjEwNTE3MDUyMzE3WjAjBgkqhkiG9w0BCQQxFgQUvTHvb8RwONLyEzTZgxxIlWYew!4wCQYHKoZIzjgEAwQvMC0CFQDP7sjwbtSVdEUqHt9GU4Zclkc36AIUC%2FBn9sLXWPEcr2mOUn5wRtp71wc%3D; JSESSIONID=V-w1EJm9ItymdMyUUiVCV6PCScd4eQF-Y2kA_SAP025N5cC6_L5MU4oFEdfWrTwU; saplb_*=(J2EE6906720)6906750'
+  },
+  body: '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">\r\n   <soapenv:Header/>\r\n   <soapenv:Body>\r\n      <urn:ZBAPI_CUST_LOGIN_VK>\r\n         <!--You may enter the following 2 items in any order-->\r\n         <PASSWORD>123456789</PASSWORD>\r\n         <USERNAME>1</USERNAME>\r\n      </urn:ZBAPI_CUST_LOGIN_VK>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>'
+
+};
+request(options, function (error, response) {
+  if (error) throw new Error(error);
+  console.log(response.body);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if(this.Email=="email" && this.Password=="password")
+  {
+    
+    this._router.navigateByUrl("/customer");
+  }
+  else
+  {
+    alert("Login Fail");
+  }
+}
+
+loginForm=new FormGroup({
+  email:new FormControl('',Validators.required),
+  password:new FormControl('',Validators.required)
+})
+get email()
+{
+  return this.loginForm.get('email');
+}
+get password()
+{
+  return this.loginForm.get('password');
+}
+}
+
+---------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------
+2)customer detail
+
+var request = require('request');
+var options = {
+  'method': 'POST',
+  'url': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_VK_CUST_DETAIL_SENDER&receiverParty=&receiverService=&interface=SI_CUST_DETAIL_VK&interfaceNamespace=http://vicky_customer_detail.com',
+  'headers': {
+    'SOAPAction': 'http://sap.com/xi/WebService/soap1.1',
+    'Content-Type': 'text/xml',
+    'Authorization': 'Basic UE9VU0VSOlRlY2hAMjAyMQ==',
+    'Cookie': 'MYSAPSSO2=AjExMDAgAA1wb3J0YWw6UE9VU0VSiAAHZGVmYXVsdAEABlBPVVNFUgIAAzAwMAMAA0tQTwQADDIwMjEwNTIwMTcwMAUABAAAAAgKAAZQT1VTRVL%2FAQUwggEBBgkqhkiG9w0BBwKggfMwgfACAQExCzAJBgUrDgMCGgUAMAsGCSqGSIb3DQEHATGB0DCBzQIBATAiMB0xDDAKBgNVBAMTA0tQTzENMAsGA1UECxMESjJFRQIBADAJBgUrDgMCGgUAoF0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMjEwNTIwMTcwMDIyWjAjBgkqhkiG9w0BCQQxFgQUBQE1yZ2vtyYxGacEYJ5XOgjmfgMwCQYHKoZIzjgEAwQvMC0CFQC!INwAyQF6ZR!mUcBzzbDrAR6kRAIUNLG%2F8sv8cSIkyhfMawGWv6LS4L4%3D; JSESSIONID=TnGIABlSU8GZEEHHZlpw2j92kbiKeQF-Y2kA_SAPAw50T00NCgI2e7Pzz4wpXxxK; JSESSIONMARKID=BGDZdgD-pZwrgrQ7nWNgxOvPldDK4GMa8cYn5jaQA; saplb_*=(J2EE6906720)6906750'
+  },
+  body: '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">\r\n   <soapenv:Header/>\r\n   <soapenv:Body>\r\n      <urn:ZBAPI_CUST_DETAIL_VK>\r\n         <USERNAME>0000000008</USERNAME>\r\n      </urn:ZBAPI_CUST_DETAIL_VK>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>'
+
+};
+request(options, function (error, response) {
+  if (error) throw new Error(error);
+  console.log(response.body);
+});
+
+REST
+
+var request = require('request');
+var options = {
+  'method': 'POST',
+  'url': 'http://dxktpipo.kaarcloud.com:50000/RESTAdapter/customerdetails',
+  'headers': {
+    'Authorization': 'Basic UE9VU0VSOlRlY2hAMjAyMQ==',
+    'Content-Type': 'application/json',
+    'Cookie': 'JSESSIONID=iYGe7sUPjfN2pu5kB3QUTYNWLS2XeQF-Y2kA_SAP_RBUHzPP-EEPg4bfqwgemsm9; JSESSIONMARKID=BZeZMQHNhs7nlQimMemygKeN7O0PSunP4qIH5jaQA; saplb_*=(J2EE6906720)6906750'
+  },
+  body: JSON.stringify({
+    "USERNAME": "18"
+  })
+
+};
+request(options, function (error, response) {
+  if (error) throw new Error(error);
+  console.log(response.body);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------
+3) customer update
+var request = require('request');
+var options = {
+  'method': 'POST',
+  'url': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_VK_CUST_UPDATE_VK&receiverParty=&receiverService=&interface=SI_CUST_UPDATE_VK&interfaceNamespace=http://vicky_cust_update.com',
+  'headers': {
+    'SOAPAction': 'http://sap.com/xi/WebService/soap1.1',
+    'Content-Type': 'text/xml',
+    'Authorization': 'Basic UE9VU0VSOlRlY2hAMjAyMQ==',
+    'Cookie': 'MYSAPSSO2=AjExMDAgAA1wb3J0YWw6UE9VU0VSiAAHZGVmYXVsdAEABlBPVVNFUgIAAzAwMAMAA0tQTwQADDIwMjEwNTIxMTMyOAUABAAAAAgKAAZQT1VTRVL%2FAQUwggEBBgkqhkiG9w0BBwKggfMwgfACAQExCzAJBgUrDgMCGgUAMAsGCSqGSIb3DQEHATGB0DCBzQIBATAiMB0xDDAKBgNVBAMTA0tQTzENMAsGA1UECxMESjJFRQIBADAJBgUrDgMCGgUAoF0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMjEwNTIxMTMyODUyWjAjBgkqhkiG9w0BCQQxFgQUnngwcF1Fp!5DNn5NbGKCxr926eswCQYHKoZIzjgEAwQvMC0CFQCEd4JuwUd%2FmzBWM9wTLjCcqh2o6AIUcKMRAhDA1ehHbPY2npLNmVHTnNY%3D; JSESSIONID=wh-WXbkx53aA7JK21LEMpykWSx2PeQF-Y2kA_SAPcf0p8RZtgjrK65sG2mEqBDIF; JSESSIONMARKID=m8rH4Ag_aUD3D2JHlquNQCBhxQzqpE1UCgpX5jaQA; saplb_*=(J2EE6906720)6906750'
+  },
+  body: '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">\r\n   <soapenv:Header/>\r\n   <soapenv:Body>\r\n      <urn:ZBAPI_CUST_EDIT_VK>\r\n         <!--You may enter the following 13 items in any order-->\r\n         <!--Optional:-->\r\n         <ADDRESS>pondicerry</ADDRESS>\r\n         <!--Optional:-->\r\n         <CITY>lawspet</CITY>\r\n         <!--Optional:-->\r\n         <COUNTRY>?</COUNTRY>\r\n         <!--Optional:-->\r\n         <FAX_NUMBER>?</FAX_NUMBER>\r\n         <!--Optional:-->\r\n         <NAME>vignesh</NAME>\r\n         <!--Optional:-->\r\n         <NAME_2>vicky</NAME_2>\r\n         <!--Optional:-->\r\n         <ONE_TIME_ACC>?</ONE_TIME_ACC>\r\n         <!--Optional:-->\r\n         <POSTAL_CODE>605008</POSTAL_CODE>\r\n         <!--Optional:-->\r\n         <SEARCH_TERM>champ</SEARCH_TERM>\r\n         <!--Optional:-->\r\n         <STATE>pondicherry</STATE>\r\n         <!--Optional:-->\r\n         <STREET>Bharathi</STREET>\r\n         <!--Optional:-->\r\n         <TELEPHONE>9874656123</TELEPHONE>\r\n         <USERNAME>1</USERNAME>\r\n      </urn:ZBAPI_CUST_EDIT_VK>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>'
+
+};
+request(options, function (error, response) {
+  if (error) throw new Error(error);
+  console.log(response.body);
+});
+
+
+
+REST
+
+var request = require('request');
+var options = {
+  'method': 'POST',
+  'url': 'http://dxktpipo.kaarcloud.com:50000/RESTAdapter/customer/edit',
+  'headers': {
+    'Authorization': 'Basic UE9VU0VSOlRlY2hAMjAyMQ==',
+    'Content-Type': 'application/json',
+    'Cookie': 'JSESSIONID=iYGe7sUPjfN2pu5kB3QUTYNWLS2XeQF-Y2kA_SAP_RBUHzPP-EEPg4bfqwgemsm9; JSESSIONMARKID=BZeZMQHNhs7nlQimMemygKeN7O0PSunP4qIH5jaQA; saplb_*=(J2EE6906720)6906750'
+  },
+  body: JSON.stringify({
+    "USERNAME": "2"
+  })
+
+};
+request(options, function (error, response) {
+  if (error) throw new Error(error);
+  console.log(response.body);
+});
+
+
+
+
+----------------------------------------------------------------------------------
+sales:
+http://dxktpipo.kaarcloud.com:50000/dir/wsdl?p=ic/806023b0ebfd38828705ff9d37531ede
+
+
+var request = require('request');
+var options = {
+  'method': 'POST',
+  'url': 'http://dxktpipo.kaarcloud.com:50000/RESTAdapter/sales',
+  'headers': {
+    'Authorization': 'Basic UE9VU0VSOlRlY2hAMjAyMQ==',
+    'Content-Type': 'application/json',
+    'Cookie': 'MYSAPSSO2=AjExMDAgAA1wb3J0YWw6UE9VU0VSiAAHZGVmYXVsdAEABlBPVVNFUgIAAzAwMAMAA0tQTwQADDIwMjEwNTIyMDM1OAUABAAAAAgKAAZQT1VTRVL%2FAQQwggEABgkqhkiG9w0BBwKggfIwge8CAQExCzAJBgUrDgMCGgUAMAsGCSqGSIb3DQEHATGBzzCBzAIBATAiMB0xDDAKBgNVBAMTA0tQTzENMAsGA1UECxMESjJFRQIBADAJBgUrDgMCGgUAoF0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMjEwNTIyMDM1ODA2WjAjBgkqhkiG9w0BCQQxFgQU57JXKIm7LX4C55zpIFs848XcN48wCQYHKoZIzjgEAwQuMCwCFBX%2FHtKV5TBv1B0mPqCg1PtTBZdwAhRjavSq2YPuBpqgP8sNyIlpOjrErg%3D%3D; JSESSIONID=iJCq8xBkqdkApHmJ2I4uFNNrGzmSeQF-Y2kA_SAPConICn8LO1KfOR_fOy7yPqkd; JSESSIONMARKID=WLat-wIp_thozdBQm9mBP3eastaQHvQobG3H5jaQA; saplb_*=(J2EE6906720)6906750'
+  },
+  body: JSON.stringify({
+    "CUST_ID": "8"
+  })
+
+};
+request(options, function (error, response) {
+  if (error) throw new Error(error);
+  console.log(response.body);
+});
+
+
+
+
+----------------------------------------------------------------------------------------
+Delivery list:
+var request = require('request');
+var options = {
+  'method': 'POST',
+  'url': 'http://dxktpipo.kaarcloud.com:50000/RESTAdapter/delivery',
+  'headers': {
+    'Authorization': 'Basic UE9VU0VSOlRlY2hAMjAyMQ==',
+    'Content-Type': 'application/json',
+    'Cookie': 'MYSAPSSO2=AjExMDAgAA1wb3J0YWw6UE9VU0VSiAAHZGVmYXVsdAEABlBPVVNFUgIAAzAwMAMAA0tQTwQADDIwMjEwNTIyMDM1OAUABAAAAAgKAAZQT1VTRVL%2FAQQwggEABgkqhkiG9w0BBwKggfIwge8CAQExCzAJBgUrDgMCGgUAMAsGCSqGSIb3DQEHATGBzzCBzAIBATAiMB0xDDAKBgNVBAMTA0tQTzENMAsGA1UECxMESjJFRQIBADAJBgUrDgMCGgUAoF0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMjEwNTIyMDM1ODA2WjAjBgkqhkiG9w0BCQQxFgQU57JXKIm7LX4C55zpIFs848XcN48wCQYHKoZIzjgEAwQuMCwCFBX%2FHtKV5TBv1B0mPqCg1PtTBZdwAhRjavSq2YPuBpqgP8sNyIlpOjrErg%3D%3D; JSESSIONID=iJCq8xBkqdkApHmJ2I4uFNNrGzmSeQF-Y2kA_SAPConICn8LO1KfOR_fOy7yPqkd; JSESSIONMARKID=WLat-wIp_thozdBQm9mBP3eastaQHvQobG3H5jaQA; saplb_*=(J2EE6906720)6906750'
+  },
+  body: JSON.stringify({
+    "CUST_ID": "18"
+  })
+
+};
+request(options, function (error, response) {
+  if (error) throw new Error(error);
+  console.log(response.body);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var xml=response.body;
+  pareString(xml,function(err,result)
+  {
+      result=result['SOAP:Envelope']['SOAP:Body'][0]['ns0:ZBAPI_CUST_LOGIN_VK.Response'][0]['BAPIRETURN'][0]['TYPE'][0];
+      console.log(result)
+  })
+  if(result =='S')
+  {
+      res.json({'username':user,'isSuccess':true})
+  }
+  else{
+    res.json({'username':user,'isSuccess':false})
+  }
+});
+
+
+
+
+
+
+
+
+
+----------
+var request = require('request');
+var options = {
+  'method': 'POST',
+  'url': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_VK_CUSTLOGIN_SENDER&receiverParty=&receiverService=&interface=SI_CUST_LOGIN_VK&interfaceNamespace=http://vickycustomportl.com',
+  'headers': {
+    'SOAPAction': '"http://sap.com/xi/WebService/soap1.1"',
+    'Content-Type': 'text/xml',
+    'Authorization': 'Basic UE9VU0VSOlRlY2hAMjAyMQ==',
+    'Cookie': 'MYSAPSSO2=AjExMDAgAA1wb3J0YWw6UE9VU0VSiAAHZGVmYXVsdAEABlBPVVNFUgIAAzAwMAMAA0tQTwQADDIwMjEwNTE4MDM1NAUABAAAAAgKAAZQT1VTRVL%2FAQQwggEABgkqhkiG9w0BBwKggfIwge8CAQExCzAJBgUrDgMCGgUAMAsGCSqGSIb3DQEHATGBzzCBzAIBATAiMB0xDDAKBgNVBAMTA0tQTzENMAsGA1UECxMESjJFRQIBADAJBgUrDgMCGgUAoF0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMjEwNTE4MDM1NDExWjAjBgkqhkiG9w0BCQQxFgQU63ojbhOg!psJ%2FLWfE1t7bD4o3F4wCQYHKoZIzjgEAwQuMCwCFGEWf3SMQHy3jgPb%2FEIXpqT8doE2AhQyOzaDLYRRDHw4zkcQPUPY7UvrEw%3D%3D; JSESSIONID=avUYF5ZixeQN18W0PDKqaii9FZx9eQF-Y2kA_SAPJ7ypWouIGOHE0vd-tO-SZP0Q; saplb_*=(J2EE6906720)6906750'
+  },
+  body: '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">\r\n   <soapenv:Header/>\r\n   <soapenv:Body>\r\n      <urn:ZBAPI_CUST_LOGIN_VK>\r\n         <!--You may enter the following 2 items in any order-->\r\n         <PASSWORD></PASSWORD>\r\n         <USERNAME></USERNAME>\r\n      </urn:ZBAPI_CUST_LOGIN_VK>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>'
+
+};
+request(options, function (error, response) {
+  if (error) throw new Error(error);
+  console.log(response.body);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------
+customer details:-
+
+ DATA: IT_DATA TYPE TABLE OF ZCUST_EDIT_S.
+
+  SELECT KUNNR LAND1 NAME1 NAME2 ORT01 PSTLZ REGIO SORTL STRAS TELF1 TELFX XCPDK ADRNR FROM KNA1 INTO TABLE IT_DATA WHERE KUNNR = CUSTOMER_ID.
+
+  LOOP AT IT_DATA INTO CUSTOMER_DETAILS.
+  ENDLOOP.
+
+  IF SY-SUBRC EQ 0.
+    RETURN-TYPE = 'S'.
+  ELSE.
+    RETURN-TYPE = 'E'.
+  ENDIF.
+
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------------
+Csutomer edit
+FUNCTION ZBAPI_CUST_EDIT_RC.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     VALUE(CUSTOMER_ID) TYPE  ZCUST_EDIT_S-CUSTOMER_ID
+*"     VALUE(COUNTRY) TYPE  ZCUST_EDIT_S-COUNTRY OPTIONAL
+*"     VALUE(NAME) TYPE  ZCUST_EDIT_S-NAME OPTIONAL
+*"     VALUE(NAME_2) TYPE  ZCUST_EDIT_S-NAME_2 OPTIONAL
+*"     VALUE(CITY) TYPE  ZCUST_EDIT_S-CITY OPTIONAL
+*"     VALUE(POSTAL_CODE) TYPE  ZCUST_EDIT_S-POSTAL_CODE OPTIONAL
+*"     VALUE(STATE) TYPE  ZCUST_EDIT_S-STATE OPTIONAL
+*"     VALUE(SEARCH_TERM) TYPE  ZCUST_EDIT_S-SEARCH_TERM OPTIONAL
+*"     VALUE(STREET) TYPE  ZCUST_EDIT_S-STREET OPTIONAL
+*"     VALUE(TELEPHONE) TYPE  ZCUST_EDIT_S-TELEPHONE OPTIONAL
+*"     VALUE(FAX_NUMBER) TYPE  ZCUST_EDIT_S-FAX_NUMBER OPTIONAL
+*"     VALUE(ONE_TIME_ACC) TYPE  ZCUST_EDIT_S-ONE_TIME_ACC OPTIONAL
+*"     VALUE(ADDRESS) TYPE  ZCUST_EDIT_S-ADDRESS OPTIONAL
+*"  EXPORTING
+*"     VALUE(RETURN) TYPE  BAPIRETURN
+*"----------------------------------------------------------------------
+
+  DATA : IT_KNA1 TYPE TABLE OF KNA1,
+         WA_KNA1 TYPE KNA1.
+
+  SELECT * FROM KNA1 INTO TABLE IT_KNA1 WHERE KUNNR = CUSTOMER_ID.
+
+  IF SY-SUBRC NE 0.
+    RETURN-TYPE = 'A'.
+  ELSE.
+
+    LOOP AT IT_KNA1 INTO WA_KNA1.
+
+      IF COUNTRY IS NOT INITIAL.
+        WA_KNA1-LAND1 = COUNTRY.
+      ENDIF.
+      IF NAME IS NOT INITIAL.
+        WA_KNA1-NAME1 = NAME.
+      ENDIF.
+      IF NAME_2 IS NOT INITIAL.
+        WA_KNA1-NAME2 = NAME_2.
+      ENDIF.
+      IF CITY IS NOT INITIAL.
+        WA_KNA1-ORT01 = CITY.
+      ENDIF.
+      IF POSTAL_CODE IS NOT INITIAL.
+        WA_KNA1-PSTLZ = POSTAL_CODE.
+      ENDIF.
+      IF STATE IS NOT INITIAL.
+        WA_KNA1-REGIO = STATE.
+      ENDIF.
+      IF SEARCH_TERM IS NOT INITIAL.
+        WA_KNA1-SORTL = SEARCH_TERM.
+      ENDIF.
+      IF STREET IS NOT INITIAL.
+        WA_KNA1-STRAS = STREET.
+      ENDIF.
+      IF TELEPHONE IS NOT INITIAL.
+        WA_KNA1-TELF1 = TELEPHONE.
+      ENDIF.
+      IF FAX_NUMBER IS NOT INITIAL.
+        WA_KNA1-TELFX = FAX_NUMBER.
+      ENDIF.
+      IF ONE_TIME_ACC IS NOT INITIAL.
+        WA_KNA1-XCPDK = ONE_TIME_ACC.
+      ENDIF.
+      IF ADDRESS IS NOT INITIAL.
+        WA_KNA1-ADRNR = ADDRESS.
+      ENDIF.
+    ENDLOOP.
+
+    MODIFY KNA1 FROM WA_KNA1.
+
+    IF SY-SUBRC EQ 0.
+      RETURN-TYPE ='S'.
+    ELSE.
+      RETURN-TYPE ='E'.
+    ENDIF.
+  ENDIF.
+ENDFUNCTION.
+------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------
+
+FUNCTION zbapi_cust_credit_vk.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     VALUE(CUST_ID) TYPE  KNA1-KUNNR
+*"  EXPORTING
+*"     VALUE(BAPIRETURN) TYPE  BAPIRETURN
+*"  TABLES
+*"      IT_CUSTCRED STRUCTURE  BAPI3007_2 OPTIONAL
+*"----------------------------------------------------------------------
+  TABLES: bsid.
+
+  TYPES: BEGIN OF ty_bs,
+           kunnr TYPE bsid-kunnr,
+           bukrs TYPE bsid-bukrs,
+           budat TYPE bsid-budat,
+         END OF ty_bs.
+
+  DATA: wa_bs TYPE ty_bs,
+        it_bs TYPE TABLE OF ty_bs.
+
+  DATA: wa_bap TYPE bapi3007_2,
+        it_bap TYPE TABLE OF bapi3007_2.
+
+  CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+    EXPORTING
+      input  = cust_id
+    IMPORTING
+      output = cust_id.
+
+  SELECT kunnr, bukrs, budat FROM bsid INTO TABLE @it_bs WHERE kunnr = @cust_id.
+
+  " JUST FOR THE SAKE OF EXECUTING THE BAPI
+  READ TABLE it_bs INTO wa_bs INDEX 1.
+  CALL FUNCTION 'BAPI_AR_ACC_GETOPENITEMS'
+    EXPORTING
+      companycode = wa_bs-bukrs
+      customer    = wa_bs-kunnr
+      keydate     = wa_bs-budat
+    IMPORTING
+      return      = bapireturn
+    TABLES
+      lineitems   = it_bap.
+
+  LOOP AT it_bap INTO wa_bap.
+    IF wa_bap-doc_type EQ 'DG'.
+      APPEND wa_bap TO it_custcred.
+      CLEAR  wa_bap.
+    ENDIF.
+  ENDLOOP.
+
+ENDFUNCTION.
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+DEbit
+
+FUNCTION zbapi_cust_debit_vk.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     VALUE(CUST_ID) TYPE  KNA1-KUNNR
+*"  EXPORTING
+*"     VALUE(BAPIRETURN) TYPE  BAPIRETURN
+*"  TABLES
+*"      IT_CUSTDEB STRUCTURE  BAPI3007_2 OPTIONAL
+*"----------------------------------------------------------------------
+
+
+
+   TYPES: BEGIN OF ty_bs,
+            kunnr TYPE bsid-kunnr,
+            bukrs TYPE bsid-bukrs,
+            budat TYPE bsid-budat,
+          END OF ty_bs.
+
+   DATA: wa_bs TYPE ty_bs,
+         it_bs TYPE TABLE OF ty_bs.
+
+   DATA: wa_bap TYPE bapi3007_2,
+         it_bap TYPE TABLE OF bapi3007_2.
+
+   CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+     EXPORTING
+       input  = cust_id
+     IMPORTING
+       output = cust_id.
+
+   SELECT kunnr, bukrs, budat FROM bsid INTO TABLE @it_bs WHERE kunnr = @cust_id.
+
+   " JUST FOR THE SAKE OF EXECUTING THE BAPI
+   READ TABLE it_bs INTO wa_bs INDEX 1.
+   CALL FUNCTION 'BAPI_AR_ACC_GETOPENITEMS'
+     EXPORTING
+       companycode = wa_bs-bukrs
+       customer    = wa_bs-kunnr
+       keydate     = wa_bs-budat
+     IMPORTING
+       return      = bapireturn
+     TABLES
+       lineitems   = it_bap.
+
+   LOOP AT it_bap INTO wa_bap.
+     IF wa_bap-doc_type EQ 'DR'.
+       APPEND wa_bap TO it_custdeb.
+       CLEAR  wa_bap.
+     ENDIF.
+   ENDLOOP.
+
+----------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------
+
+FUNCTION ZBAPI_CUST_PAYAG_VK.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     VALUE(CUST_ID) TYPE  KNA1-KUNNR
+*"  EXPORTING
+*"     VALUE(RETURN) TYPE  BAPIRETURN
+*"  TABLES
+*"      IT_PAYAG STRUCTURE  BAPI3007_2 OPTIONAL
+*"----------------------------------------------------------------------
+
+TYPES: BEGIN OF ty_bs,
+        KUNNR TYPE bsid-kunnr,
+        bukrs TYPE bsid-bukrs,
+        budat TYPE bsid-budat,
+       END OF ty_bs.
+
+DATA: WA_BS TYPE ty_bs,
+      IT_BS TYPE TABLE OF ty_bs.
+
+DATA: WA_BAP TYPE bapi3007_2,
+      IT_BAP TYPE TABLE OF bapi3007_2.
+
+CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+  EXPORTING
+    input        = CUST_ID
+ IMPORTING
+    OUTPUT        = CUST_ID.
+
+SELECT kunnr, bukrs, budat FROM bsid INTO TABLE @IT_BS WHERE kunnr = @CUST_ID.
+
+LOOP AT IT_BS INTO WA_BS.
+  CALL FUNCTION 'BAPI_AR_ACC_GETOPENITEMS'
+    EXPORTING
+      companycode       = WA_BS-bukrs
+      customer          = WA_BS-kunnr
+      keydate           = WA_BS-budat
+   IMPORTING
+     RETURN            = RETURN
+    TABLES
+      lineitems         = IT_BAP.
+  LOOP AT IT_BAP INTO WA_BAP.
+    APPEND WA_BAP TO IT_PAYAG.
+    CLEAR WA_BAP.
+  ENDLOOP.
+ENDLOOP.
+
+
+
+
+ENDFUNCTION.
+-----------------------------------------------------------------------------
+var request = require('request');
+var options = {
+  'method': 'POST',
+  'url': 'http://dxktpipo.kaarcloud.com:50000/RESTAdapter/delivery_te',
+  'headers': {
+    'Authorization': 'Basic UE9VU0VSOlRlY2hAMjAyMQ==',
+    'Content-Type': 'application/json',
+    'Cookie': 'JSESSIONID=6kn0IEOMJvJCJaTiMQiha7LjsjD-eQF-Y2kA_SAPa3ZgqqXLVxLVAe_jUNoi78Qk; JSESSIONMARKID=4LimTgT_pr2MipgdQFHL5No0VLmeFfLHsIRH5jaQA; saplb_*=(J2EE6906720)6906750'
+  },
+  body: JSON.stringify({
+    "CUST_ID": 11
+  })
+
+};
+request(options, function (error, response) {
+  if (error) throw new Error(error);
+  console.log(response.body);
+});
